@@ -7,7 +7,6 @@ on:
           Which number to increment in the semantic versioning.
           Set 'major', 'minor', 'patch' or 'release'.
         required: true
-  push:
 
 jobs:
   release:
@@ -23,7 +22,7 @@ jobs:
       - name: Bump-up Semantic Version
         uses: kyoh86/git-vertag-action@v1
         with:
-          method: "patch"
+          method: ${{ github.event.inputs.method }}
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
