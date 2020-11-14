@@ -3,8 +3,8 @@
 # Usage:
 #   steps:
 #     - uses: actions/checkout@v2
-#     - uses: kyoh86/git-vertag@
-FROM ghcr.io/kyoh86/git-vertag:draft
+#     - uses: kyoh86/git-vertag-action@v1
+FROM ghcr.io/kyoh86/git-vertag:v2.0.4
 WORKDIR /work
 ADD ./action.sh /action.sh
 ENTRYPOINT ["/action.sh"]

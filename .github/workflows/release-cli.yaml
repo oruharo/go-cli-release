@@ -21,7 +21,7 @@ jobs:
           go-version: 1.15
 
       - name: Bump-up Semantic Version
-        uses: ./.github/actions/git-vertag
+        uses: kyoh86/git-vertag-action
         with:
           method: "patch"
 
