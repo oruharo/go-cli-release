@@ -9,15 +9,9 @@ jobs:
           go-version: 1.15
       - name: Bump-up Semantic Version
         id: update-semver
-        run: |
-          git fetch --tags
-          go install github.com/kyoh86/git-vertag
-          echo "::set-output name=next-tag::$(git-vertag patch)"
-      - name: Check Tags
-        run: |
-          git tag
+        run: go run github.com/kyoh86/git-vertag --fetch patch
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
           version: latest
-          args: release --rm-dist --skip-publish
+          args: release --rm-dist
