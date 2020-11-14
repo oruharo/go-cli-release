@@ -4,8 +4,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
       - run: |
           echo hoge
           git fetch --tags
           git tag
+          go get github.com/kyoh86/git-vertag
+          GOBIN=. go install github.com/kyoh86/git-vertag
+          git-vertag patch
         name: hoge
