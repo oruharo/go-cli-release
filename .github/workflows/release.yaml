@@ -1,0 +1,11 @@
+on: ["push"]
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          echo hoge
+          git fetch --tags
+          git tag
+        name: hoge
