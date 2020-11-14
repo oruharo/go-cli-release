@@ -16,5 +16,5 @@ jobs:
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
-          version: latest
+          version: ${{ steps.update-semver.outputs.next-tag }}
           args: release --rm-dist --skip-publish
