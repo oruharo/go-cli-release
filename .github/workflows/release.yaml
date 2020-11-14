@@ -11,7 +11,7 @@ jobs:
         id: update-semver
         run: |
           git fetch --tags
-          go run github.com/kyoh86/git-vertag
+          go install github.com/kyoh86/git-vertag
           echo "::set-output name=next-tag::$(git-vertag patch)"
       - name: Check Tags
         run: |
