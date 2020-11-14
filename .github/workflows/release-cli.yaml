@@ -22,7 +22,7 @@ jobs:
 
       - name: Bump-up Semantic Version
         id: update-semver
-        uses: ./.github/action/git-vertag
+        uses: ./.github/actions/git-vertag
         with:
           method: ${{ github.event.inputs.method }}
 
