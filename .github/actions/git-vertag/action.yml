@@ -11,6 +11,7 @@ outputs:
     description: New tag with semantic version
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: gcr.io/kyoh86/git-vertag:latest
   args:
+    - '--fetch'
     - ${{ inputs.method }}

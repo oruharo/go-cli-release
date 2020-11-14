@@ -22,9 +22,9 @@ jobs:
 
       - name: Bump-up Semantic Version
         id: update-semver
-        uses: ./.github/actions/git-vertag
+        uses: ./.github/action/git-vertag
         with:
-          method: ${{ github.event.inputs.method }}
+          method: "patch"
 
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
