@@ -21,8 +21,7 @@ jobs:
           go-version: 1.15
 
       - name: Bump-up Semantic Version
-        id: update-semver
-        uses: ./.github/actions/git-vertag
+        uses: kyoh86/git-vertag@pkg-docker
         with:
           method: "patch"
 
