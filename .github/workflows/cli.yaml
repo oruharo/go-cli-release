@@ -7,6 +7,7 @@ on:
           Which number to increment in the semantic versioning.
           Set 'major', 'minor', 'patch' or 'release'.
         required: true
+  deployment:
   push:
     branches:
       - '*'
@@ -37,7 +38,7 @@ jobs:
   advanced:
     name: Cover and Dry Run Release
     runs-on: ubuntu-latest
-    if: github.event_name != 'workflow_dispatch'
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     needs: test
     steps:
       - name: Checkout Sources
@@ -54,6 +55,10 @@ jobs:
           # token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           fail_ci_if_error: true
           file: coverage.txt
+      - name: Bump-up Semantic Version
+        uses: kyoh86/git-vertag-action@v1
+        with:
+          method: "get"
       - name: Run GoReleaser (dry-run)
         uses: goreleaser/goreleaser-action@v2
         with:
@@ -62,7 +67,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || github.event_name == 'deployment'
     needs: test
     steps:
       - name: Checkout Sources
@@ -71,12 +76,10 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: ${{ env.GO_VERSION }}
-
       - name: Bump-up Semantic Version
         uses: kyoh86/git-vertag-action@v1
         with:
-          method: ${{ github.event.inputs.method }}
-
+          method: ${{ github.event.inputs.method }}${{ github.event.deployment.task }}
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         env:
