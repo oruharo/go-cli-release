@@ -11,7 +11,6 @@ jobs:
           echo hoge
           git fetch --tags
           git tag
-          go get github.com/kyoh86/git-vertag
-          GOBIN="${PWD}" go install github.com/kyoh86/git-vertag
+          go install github.com/kyoh86/git-vertag
           git-vertag patch
         name: hoge
