@@ -22,7 +22,9 @@ jobs:
         with:
           contexts: test-public;test-ubuntu-latest;test-macos-latest;test-windows-latest
           authToken: ${{ secrets.GITHUB_TOKEN }}
-          failureStates: failed;error;cancelled
+          timeout: 30
+          notPresentTimeout: 30
+          pollInterval: 10
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
