@@ -33,13 +33,13 @@ changelog:
       - '^docs:'
       - '^test:'
 
-brews:
-  - install: |
-      bin.install "hoge"
-      man1.install "hoge.1"
-    github:
-      owner: kyoh86
-      name: homebrew-tap
-    folder: Formula
-    homepage: https://github.com/kyoh86/hoge
-    description: Hoge
+# brews:
+#   - install: |
+#       bin.install "hoge"
+#       man1.install "hoge.1"
+#     github:
+#       owner: kyoh86
+#       name: homebrew-tap
+#     folder: Formula
+#     homepage: https://github.com/kyoh86/hoge
+#     description: Hoge
