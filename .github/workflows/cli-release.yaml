@@ -27,7 +27,9 @@ jobs:
           notPresentTimeout: 30
           pollInterval: 10
       - name: Check Test Result
-        run: echo ${{ toJSON(steps.test_result.outputs) }}
+        if: steps.test_result.outputs.result != 'success'
+        run: |
+          echo "feiled ${{ steps.test_result.outputs.failedCheckNames }}"
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
