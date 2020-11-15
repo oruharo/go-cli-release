@@ -12,7 +12,7 @@ jobs:
   test-local:
     name: Test local sources
     strategy:
-      fail-fast: true
+      fail-fast: false
       max-parallel: 3
       matrix:
         os: [ubuntu-latest, macos-latest, windows-latest]
