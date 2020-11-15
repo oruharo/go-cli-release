@@ -1,0 +1,40 @@
+name: Release CLI to the GitHub Release
+on:
+  workflow_dispatch:
+    inputs:
+      method:
+        description: |
+          Which number to increment in the semantic versioning.
+          Set 'major', 'minor', 'patch' or 'release'.
+        required: true
+  deployment:
+
+env:
+  GO_VERSION: 1.15
+
+jobs:
+  release:
+    # Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait Tests
+        uses: Sibz/await-status-action@v1.0.1
+        with:
+          contexts: test-local;test-public
+      - name: Checkout Sources
+        uses: actions/checkout@v2
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ env.GO_VERSION }}
+      - name: Bump-up Semantic Version
+        uses: kyoh86/git-vertag-action@v1
+        with:
+          method: ${{ github.event.inputs.method }}${{ github.event.deployment.task }}
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version: latest
+          args: release --rm-dist
