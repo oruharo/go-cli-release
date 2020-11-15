@@ -22,7 +22,7 @@ jobs:
         with:
           contexts: test-public
           authToken: ${{ secrets.GITHUB_TOKEN }}
-          failedStates: failure;error;skipped
+          failureStates: failure;error;skipped
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
