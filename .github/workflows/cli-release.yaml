@@ -17,6 +17,13 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
+      - name: Update Deployment Status (queued)
+        if: github.event_name == 'deployment'
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          state: queued
+          deployment_id: ${{ github.event.deployment.id }}
       - name: Wait Tests
         id: test_result
         uses: Sibz/await-status-action@v1.0.1
@@ -32,6 +39,13 @@ jobs:
           echo "feiled ${{ steps.test_result.outputs.failedCheckNames }}"
           echo "status ${{ steps.test_result.outputs.failedCheckStates }}"
           exit 1
+      - name: Update Deployment Status (progress)
+        if: github.event_name == 'deployment'
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          state: in_progress
+          deployment_id: ${{ github.event.deployment.id }}
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
@@ -49,3 +63,17 @@ jobs:
         with:
           version: latest
           args: release --rm-dist
+      - name: Update Deployment Status (success)
+        if: github.event_name == 'deployment'
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          state: success
+          deployment_id: ${{ github.event.deployment.id }}
+      - name: Update deployment status (failure)
+        if: failure() && github.event_name == 'deployment'
+        uses: chrnorm/deployment-status@releases/v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          state: failure
+          deployment_id: ${{ github.event.deployment.id }}
