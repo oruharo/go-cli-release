@@ -17,35 +17,19 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - name: Update Deployment Status (queued)
-        if: github.event_name == 'deployment'
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          state: queued
-          deployment_id: ${{ github.event.deployment.id }}
       - name: Wait Tests
         id: test_result
         uses: Sibz/await-status-action@v1.0.1
         with:
-          contexts: test-public;test-ubuntu-latest;test-macos-latest;test-windows-latest
+          contexts: test-public
           authToken: ${{ secrets.GITHUB_TOKEN }}
           timeout: 30
-          notPresentTimeout: 30
-          pollInterval: 10
       - name: Check Test Result
         if: steps.test_result.outputs.result != 'success'
         run: |
           echo "feiled ${{ steps.test_result.outputs.failedCheckNames }}"
           echo "status ${{ steps.test_result.outputs.failedCheckStates }}"
           exit 1
-      - name: Update Deployment Status (progress)
-        if: github.event_name == 'deployment'
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          state: in_progress
-          deployment_id: ${{ github.event.deployment.id }}
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
