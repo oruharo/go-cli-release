@@ -1,7 +1,5 @@
 builds:
-  - env:
-      - CGO_ENABLED=0
-    goos:
+  - goos:
       - linux
       - darwin
       - windows
@@ -9,37 +7,14 @@ builds:
       - amd64
       - "386"
     main: .
-    ldflags: -s -w -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}}
     binary: hoge
 archives:
   - id: gzip
     format: tar.gz
-    format_overrides:
-      - goos: windows
-        format: zip
     name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
     files:
       - LICENSE*
       - README*
       - CHANGELOG*
-checksum:
-  name_template: 'checksums.txt'
 snapshot:
-  name_template: "{{ .Tag }}-next"
-changelog:
-  sort: asc
-  filters:
-    exclude:
-      - '^docs:'
-      - '^test:'
-
-# brews:
-#   - install: |
-#       bin.install "hoge"
-#       man1.install "hoge.1"
-#     github:
-#       owner: kyoh86
-#       name: homebrew-tap
-#     folder: Formula
-#     homepage: https://github.com/kyoh86/hoge
-#     description: Hoge
+  name_template: SNAPSHOT-{{ .Commit }}
