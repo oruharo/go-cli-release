@@ -20,7 +20,7 @@ jobs:
       - name: Wait Tests
         uses: Sibz/await-status-action@v1.0.1
         with:
-          contexts: test-local;test-public
+          contexts: test-public
           authToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout Sources
         uses: actions/checkout@v2
