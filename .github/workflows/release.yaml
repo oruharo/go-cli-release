@@ -1,13 +1,5 @@
 name: Release CLI to the GitHub Release
 on:
-  workflow_dispatch:
-    inputs:
-      method:
-        description: |
-          Which number to increment in the semantic versioning.
-          Set 'major', 'minor', 'patch' or 'release'.
-        required: true
-  deployment:
 
 env:
   GO_VERSION: 1.15
@@ -39,24 +31,11 @@ jobs:
       - name: Bump-up Semantic Version
         uses: kyoh86/git-vertag-action@v1
         with:
-          method: ${{ github.event.inputs.method }}${{ github.event.deployment.task }}
+          # method: "major", "minor" or "patch" to update tag with semver
+          method: ""
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: release --rm-dist
-      - name: Update Deployment Status (success)
-        if: github.event_name == 'deployment'
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          state: success
-          deployment_id: ${{ github.event.deployment.id }}
-      - name: Update deployment status (failure)
-        if: failure() && github.event_name == 'deployment'
-        uses: chrnorm/deployment-status@releases/v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          state: failure
-          deployment_id: ${{ github.event.deployment.id }}
