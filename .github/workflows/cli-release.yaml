@@ -21,6 +21,7 @@ jobs:
         uses: Sibz/await-status-action@v1.0.1
         with:
           contexts: test-local;test-public
+          authToken: ${{ secrets.GITHUB_TOKEN }}
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
