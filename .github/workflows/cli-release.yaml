@@ -14,15 +14,15 @@ env:
 
 jobs:
   release:
-    # Release
+    name: Release
     runs-on: ubuntu-latest
     steps:
       - name: Wait Tests
         uses: Sibz/await-status-action@v1.0.1
         with:
-          contexts: test-public
+          contexts: test-public;test-ubuntu-latest;test-macos-latest;test-windows-latest
           authToken: ${{ secrets.GITHUB_TOKEN }}
-          failureStates: failure;error;skipped
+          failureStates: failed;error;cancelled
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
