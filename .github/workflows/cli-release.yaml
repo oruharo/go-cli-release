@@ -18,6 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait Tests
+        id: test_result
         uses: Sibz/await-status-action@v1.0.1
         with:
           contexts: test-public;test-ubuntu-latest;test-macos-latest;test-windows-latest
@@ -25,6 +26,8 @@ jobs:
           timeout: 30
           notPresentTimeout: 30
           pollInterval: 10
+      - name: Check Test Result
+        run: echo ${{ toJSON(steps.test_result.outputs) }}
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
