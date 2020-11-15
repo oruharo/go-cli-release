@@ -30,7 +30,7 @@ jobs:
         if: steps.test_result.outputs.result != 'success'
         run: |
           echo "feiled ${{ steps.test_result.outputs.failedCheckNames }}"
-          echo 1
+          exit 1
       - name: Checkout Sources
         uses: actions/checkout@v2
       - name: Setup Go
