@@ -1,5 +1,12 @@
 name: Release CLI to the GitHub Release
 on:
+  workflow_dispatch:
+    inputs:
+      method:
+        description: |
+          Which number to increment in the semantic versioning.
+          Set 'major', 'minor' or 'patch'.
+        required: true
 
 env:
   GO_VERSION: 1.15
@@ -32,7 +39,7 @@ jobs:
         uses: kyoh86/git-vertag-action@v1
         with:
           # method: "major", "minor" or "patch" to update tag with semver
-          method: ""
+          method: "${{ github.event.inputs.method }}"
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         env:
