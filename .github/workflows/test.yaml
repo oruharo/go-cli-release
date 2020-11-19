@@ -24,9 +24,9 @@ jobs:
         run: go test -race ./...
 
   test-status:
-    name: Test release
+    name: Test status
     runs-on: ubuntu-latest
-    needs: test-local
+    needs: test
     steps:
       - name: Set Check Status Success
         uses: Sibz/github-status-action@v1.1.1
