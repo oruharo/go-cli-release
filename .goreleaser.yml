@@ -4,7 +4,6 @@ builds:
       - darwin
       - windows
     goarch:
-      - amd
       - amd64
       - arm
       - arm64
