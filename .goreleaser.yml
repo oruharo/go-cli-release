@@ -8,10 +8,8 @@ builds:
       - arm
       - arm64
       - "386"
-    binary: hoge
 archives:
   - format: tar.gz
-    name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
     format_overrides:
       - goos: windows
         format: zip
