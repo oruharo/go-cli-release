@@ -33,3 +33,4 @@ jobs:
         with:
           # method: "major", "minor" or "patch" to update tag with semver
           method: "${{ github.event.inputs.method }}"
+          push: true
