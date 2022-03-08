@@ -18,3 +18,5 @@ archives:
       - CHANGELOG*
 snapshot:
   name_template: SNAPSHOT-{{ .Commit }}
+release:
+  draft: true
